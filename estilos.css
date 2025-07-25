@@ -1,1 +1,220 @@
+/* Variables para colores */
+:root {
+    --background-dark: #1a1a1a;
+    --text-light: #f0f0f0;
+    --semester-header-bg: #333;
+    --course-bg: #444;
+    --course-border: #666;
+    --course-hover-bg: #555;
+    --approved-course-bg: #008080; /* Teal/Verde azulado para aprobado */
+    --approved-course-text: #fff;
+    --blocked-course-bg: #660000; /* Rojo oscuro para bloqueado */
+    --blocked-course-text: #ccc;
+    --modal-bg: rgba(0, 0, 0, 0.7);
+    --modal-content-bg: #333;
+    --modal-text: #f0f0f0;
+    --close-button-color: #f0f0f0;
+}
 
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--semester-header-bg);
+    color: var(--text-light);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid var(--course-border);
+}
+
+header h1 {
+    margin-bottom: 10px;
+}
+
+/* Contenedor principal de la malla */
+#curriculum-grid {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las columnas se envuelvan en pantallas pequeñas */
+    justify-content: center;
+    gap: 20px; /* Espacio entre las columnas de semestres */
+    padding: 20px;
+    flex-grow: 1; /* Permite que el grid ocupe el espacio disponible */
+}
+
+/* Estilos para cada columna de semestre */
+.semester {
+    background-color: var(--semester-header-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    width: 100%; /* Por defecto ocupa todo el ancho */
+    max-width: 300px; /* Ancho máximo para cada columna */
+    flex-shrink: 0; /* Evita que las columnas se encojan */
+    display: flex;
+    flex-direction: column;
+}
+
+.semester h2 {
+    background-color: var(--course-border);
+    color: var(--text-light);
+    padding: 15px;
+    margin: 0;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.course-list {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espacio entre los cursos */
+}
+
+/* Estilos para cada curso */
+.course {
+    background-color: var(--course-bg);
+    border: 1px solid var(--course-border);
+    border-radius: 5px;
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, text-decoration 0.3s ease;
+    text-align: center;
+    font-size: 0.95em;
+    font-weight: bold;
+    color: var(--text-light);
+}
+
+.course:hover {
+    background-color: var(--course-hover-bg);
+}
+
+/* Estilos para cursos aprobados */
+.course.approved {
+    background-color: var(--approved-course-bg);
+    border-color: var(--approved-course-bg);
+    color: var(--approved-course-text);
+    text-decoration: line-through;
+    opacity: 0.8;
+    cursor: default;
+}
+
+.course.approved:hover {
+    background-color: var(--approved-course-bg); /* Mantiene el color al hacer hover si está aprobado */
+}
+
+/* Estilos para cursos bloqueados */
+.course.blocked {
+    background-color: var(--blocked-course-bg);
+    border-color: var(--blocked-course-bg);
+    color: var(--blocked-course-text);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.course.blocked:hover {
+    background-color: var(--blocked-course-bg); /* Mantiene el color al hacer hover si está bloqueado */
+}
+
+/* Modal de mensajes */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Posición fija para cubrir toda la pantalla */
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Habilita el scroll si el contenido es demasiado grande */
+    background-color: var(--modal-bg);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--modal-content-bg);
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    position: relative;
+    color: var(--modal-text);
+    text-align: center;
+}
+
+.close-button {
+    color: var(--close-button-color);
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #aaa;
+    text-decoration: none;
+}
+
+#modal-message {
+    font-size: 1.1em;
+    margin: 0;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    #curriculum-grid {
+        flex-direction: column; /* Apila los semestres verticalmente en pantallas pequeñas */
+        align-items: center; /* Centra los semestres apilados */
+    }
+
+    .semester {
+        max-width: 90%; /* Ajusta el ancho para pantallas más pequeñas */
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    .semester h2 {
+        font-size: 1.1em;
+    }
+
+    .course {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    #curriculum-grid {
+        justify-content: space-around; /* Distribuye los semestres equitativamente */
+    }
+
+    .semester {
+        max-width: 45%; /* Dos columnas en pantallas medianas */
+    }
+}
+
+@media (min-width: 1201px) {
+    #curriculum-grid {
+        justify-content: center;
+    }
+
+    .semester {
+        max-width: 280px; /* Ancho fijo para pantallas grandes */
+    }
+}
